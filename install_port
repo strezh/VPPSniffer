@@ -1,0 +1,15 @@
+#/bin/bash
+
+sudo modprobe parport_pc
+sudo modprobe ppdev
+sudo rmmod lp
+
+make
+sudo make insert
+
+# gcc test.c -o test
+
+sudo chmod 666 /dev/parportsnif0 
+sudo chmod 666 /dev/parport0
+
+
