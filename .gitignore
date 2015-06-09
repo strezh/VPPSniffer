@@ -1,0 +1,5 @@
+*.cmd
+*.ko
+*.o
+*.swp
+.tmp_versions/*
