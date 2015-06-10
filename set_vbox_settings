@@ -7,6 +7,9 @@ else
     VM_NAME="WinXP"
 fi
 
+VBoxManage modifyvm --lptmode1 /dev/parport0
+VBoxManage modifyvm --lpt1 0x378 7
+
 VBoxManage setextradata ${VM_NAME} "VBoxInternal/Devices/parallel/0/LUN#0/Config/DevicePath" /dev/parportsnif0
 VBoxManage setextradata ${VM_NAME} "VBoxInternal/Devices/parallel/0/LUN#0/Driver" HostParallel
 VBoxManage setextradata ${VM_NAME} "VBoxInternal/Devices/parallel/0/Config/IOBase" 0x378
