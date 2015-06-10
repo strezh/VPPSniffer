@@ -27,22 +27,58 @@ Tested in Linux Debian 8.0 (Jessie) with Linux kernel 3.16.0
 
 ```sh
 # insert and remove standard modules (if yuo don't have physical LPT)
-sudo modprobe parport_pc
-sudo modprobe ppdev
-sudo rmmod lp
+~$ sudo modprobe parport_pc
+~$ sudo modprobe ppdev
+~$ sudo rmmod lp
 
 # build kernel modules
-make
+~$ make
 # insert modules
 sudo make insert
+
+#change privileges for users
+~$ sudo chmod 666 /dev/parportsnif0 
+~$ sudo chmod 666 /dev/parport0
 ```
 
-## Change privileges for users
-
+## Using
+You can test correct installation and runnig modules by this command:
 ```sh
-sudo chmod 666 /dev/parportsnif0 
-sudo chmod 666 /dev/parport0
+~$ ls /dev/parport*
 ```
+Correct responce must be like this:
+```sh
+/dev/parport0  /dev/parportsnif0
+```
+Device `/dev/parport0` is parallel port (virtual or real if exist)
+Device `/dev/parportsnif0` is fake parallel port for sniffering
+All information from sniffer logged to `/proc/parportlog` file
+
+## Testing
+
+Start write sniffer log file to dump.ols
+```sh
+~$ cat /proc/parportlog > dump.ols
+```
+
+Run test program
+```sh
+~$ ./sniftest/sniftest
+```
+
+Press `Ctrl+C` to break logging and open dump file dump.ols
+```
+;Rate: 1000000
+;Channels: 32
+0000000055@100099
+00000000AA@200170
+0000000055@300247
+00000000AA@400317
+0000000000@500387
+# [1433923145.442004659] 0 CLOSE
+```
+
+You can open dump.ols with [Open Logic Sniffer](http://dangerousprototypes.com/docs/Open_Bench_Logic_Sniffer)
 
 ## VirtualBox configuration
 Configuration LPT1 port (0x378 address) for Windows Virtual Machine in VirtualBox
